@@ -5,10 +5,10 @@ import t from 'tcomb-form-native'; // 0.6.9
 
 const Form = t.form.Form;
 
-// var typeAmount = new Object();
-// typeAmount['Fruit'];
-// typeAmount['Meat'];
-// typeAmount['Dairy'];
+var image = new Object();
+image['Fruit'] = 'http://icons.iconarchive.com/icons/gcds/chinese-new-year/512/orange-icon.png';
+image['Meat'] = 'http://icons.iconarchive.com/icons/fixicon/market/128/cutlet-icon.png';
+image['Dairy'] = 'http://icons.iconarchive.com/icons/iconsmind/outline/256/Milk-Bottle-icon.png';
 
 class Food extends React.Component {
   constructor(props) {
@@ -26,12 +26,19 @@ class Food extends React.Component {
 
   render() {
     return (
-      <Button
-        onPress={() => {
-          this.addOne();
-        }}
-        title = {this.state.number.toString() + " " + this.props.type}
-      />
+      <View style = {styles.foodItem}>
+        <Image
+         style={{width: 50, height: 50}}
+         source={{uri: image[this.props.type]}}
+       />
+        <Text> {this.props.type} </Text>
+        <Button style= {styles.button}
+          onPress={() => {
+            this.addOne();
+          }}
+          title = {this.state.number.toString()}
+        />
+      </View>
     );
   }
 }
@@ -52,7 +59,6 @@ export default class App extends React.Component {
   }
 }
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -64,13 +70,17 @@ const styles = StyleSheet.create({
     paddingTop: '10%',
     paddingBottom: '10%',
     marginTop: '50',
-    marginBottom: '50'
+    marginBottom: '50',
+
   },
-  title: {
-    fontSize: 20,
+  foodItem: {
+    flex: 1,
+    flexDirection: 'row',
+    height: 50,
+    width: 50
   },
-  subTitle: {
-    fontSize: 15,
-    marginBottom: '5%'
+  button: {
+    height: 50,
+    width: 50
   }
 });
