@@ -1,33 +1,57 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button} from 'react-native';
+import { StyleSheet, Text, View, Button, Image} from 'react-native';
 
 import t from 'tcomb-form-native'; // 0.6.9
 
 const Form = t.form.Form;
 
+// var typeAmount = new Object();
+// typeAmount['Fruit'];
+// typeAmount['Meat'];
+// typeAmount['Dairy'];
+
+class Food extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      number : 0
+    }
+  }
+
+  addOne() {
+    this.setState({
+      number: this.state.number + 1
+    });
+  }
+
+  render() {
+    return (
+      <Button
+        onPress={() => {
+          this.addOne();
+        }}
+        title = {this.state.number.toString() + " " + this.props.type}
+      />
+    );
+  }
+}
+
 export default class App extends React.Component {
   handleSubmit = () => {
-    const value = this._form.getValue(); 
+    const value = this._form.getValue();
     console.log('value: ', value);
   }
   render() {
     return (
       <View style={styles.container}>
-        <View style ={styles.top}>
-          <Text style={styles.title}>What did you eat today?</Text>
-        </View>
-          <Text style={styles.subTitle}>Fruits:</Text>
-         <Form type={Food}/>
-          <Button title="Submit!" onPress={this.handleSubmit}/>
+        <Food style = {styles.item} type = 'Fruit'/>
+        <Food style = {styles.item} type = 'Meat'/>
+        <Food style = {styles.item} type ='Dairy'/>
       </View>
     );
   }
 }
 
-const Food = t.struct({
-  quantity: t.String,
-  source: t.maybe(t.String),
-});
 
 const styles = StyleSheet.create({
   container: {
@@ -36,9 +60,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  top: {
-    alignItems: 'center',
-    marginVertical: '10%',
+  item: {
+    paddingTop: '10%',
+    paddingBottom: '10%',
+    marginTop: '50',
+    marginBottom: '50'
   },
   title: {
     fontSize: 20,
